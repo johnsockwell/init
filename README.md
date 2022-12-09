@@ -2,11 +2,6 @@
 
 Scripts to initialize software environments.
 
-## Install
-
-```
-```
-
 ## Usage
 
 ```
