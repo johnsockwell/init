@@ -1,6 +1,6 @@
 # init
 
-This is an example file with default selections.
+Scripts to initialize software environments.
 
 ## Install
 
