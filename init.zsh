@@ -14,13 +14,22 @@ function init_repo () {
   git -C "${config_dir}" remote set-url origin "${config_remote}"
 }
 
+# Checkout HEAD for Initialization
+function init_worktree () {
+  git -C "${config_dir}" stash --quiet
+}
+
 # Process Command
 case ${1} in
   repo)
     init_repo
     ;;
+  worktree)
+    init_worktree
+    ;;
   *)
     # default
     init_repo
+    init_worktree
     ;;
 esac
