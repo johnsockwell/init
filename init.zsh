@@ -17,6 +17,16 @@ function init_ssh () {
   ssh-add -q "${config_key}"
 }
 
+# Initialize GitHub Access
+function init_github () {
+  while ssh -q git@github.com > /dev/null 2>&1; [[ $? -ne 1 ]]; do
+    echo "Please add the following Deploy Key to your account..."
+    cat "${config_key}.pub"
+    echo "Press any key to continue..."
+    read -s -k
+  done
+}
+
 # Initialize Config Repo
 function init_repo () {
   mkdir -p "${config_dir}"
@@ -41,6 +51,9 @@ case ${1} in
   ssh)
     init_ssh
     ;;
+  github)
+    init_github
+    ;;
   repo)
     init_repo
     ;;
@@ -53,6 +66,7 @@ case ${1} in
   *)
     # default
     init_ssh
+    init_github
     init_repo
     init_worktree
     exec_init
