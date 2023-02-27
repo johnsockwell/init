@@ -6,6 +6,7 @@
 # Initialization Parameters
 declare -r config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}"
 declare -r config_remote="git@github.com:johnsockwell/config.git"
+declare -r config_init="init.zsh"
 
 # Initialize Config Repo
 function init_repo () {
@@ -21,6 +22,11 @@ function init_worktree () {
   git -C "${config_dir}" checkout --quiet --detach origin/HEAD
 }
 
+# Execute Config Initialization
+function exec_init () {
+  zsh "${config_dir}/${config_init}"
+}
+
 # Process Command
 case ${1} in
   repo)
@@ -29,9 +35,13 @@ case ${1} in
   worktree)
     init_worktree
     ;;
+  execute)
+    exec_init
+    ;;
   *)
     # default
     init_repo
     init_worktree
+    exec_init
     ;;
 esac
