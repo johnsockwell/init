@@ -7,6 +7,15 @@
 declare -r config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}"
 declare -r config_remote="git@github.com:johnsockwell/config.git"
 declare -r config_init="init.zsh"
+declare -r config_key="${HOME}/.ssh/com.github.johnsockwell.config"
+
+# Initialize SSH
+function init_ssh () {
+  if [[ ! -e ${config_key} ]]; then
+    ssh-keygen -q -t ed25519  -C "johnsockwell@users.noreply.github.com" -f "${config_key}" -N ''
+  fi
+  ssh-add -q "${config_key}"
+}
 
 # Initialize Config Repo
 function init_repo () {
@@ -29,6 +38,9 @@ function exec_init () {
 
 # Process Command
 case ${1} in
+  ssh)
+    init_ssh
+    ;;
   repo)
     init_repo
     ;;
@@ -40,6 +52,7 @@ case ${1} in
     ;;
   *)
     # default
+    init_ssh
     init_repo
     init_worktree
     exec_init
