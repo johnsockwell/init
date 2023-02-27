@@ -18,6 +18,7 @@ function init_repo () {
 function init_worktree () {
   git -C "${config_dir}" stash --quiet
   git -C "${config_dir}" fetch --quiet --depth 1 origin HEAD
+  git -C "${config_dir}" checkout --quiet --detach origin/HEAD
 }
 
 # Process Command
