@@ -9,6 +9,7 @@ declare -r config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}"
 # Initialize Config Repo
 function init_repo () {
   mkdir -p "${config_dir}"
+  git -C "${config_dir}" init --quiet
 }
 
 # Process Command
